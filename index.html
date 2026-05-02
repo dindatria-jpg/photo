@@ -2,319 +2,697 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>PHOTO BOOTH</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>PHOTO BOOTH · PPLG 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,700&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
-<div class="bg-orb"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
-<canvas id="particles-canvas"></canvas>
-<div class="app-container">
-  <header class="hero-section">
-    <h1>PHOTO BOOTH</h1>
-    <p class="tagline">✦ The Booth of Infinite Memories | PPLG 1 ✦</p>
-    <div class="badge-container">
-      <span class="badge"><i data-lucide="mic"></i> Voice Concierge</span>
-      <span class="badge"><i data-lucide="repeat"></i> Boomerang FX</span>
-      <span class="badge"><i data-lucide="layers"></i> 3-Strip Studio</span>
-      <span class="badge"><i data-lucide="grid"></i> Kolase 2x2</span>
-      <span class="badge"><i data-lucide="zoom-in"></i> Zoom Digital</span>
-      <span class="badge"><i data-lucide="flip-horizontal"></i> Live Mirror</span>
-    </div>
-  </header>
+  <div class="bg-orb">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <canvas id="particles-canvas"></canvas>
+  <div class="app-container">
+    <header class="hero-section">
+      <h1>✨ PHOTO BOOTH ✨</h1>
+      <p class="tagline">✦ Cinematic Instant Film · PPLG 1 Ultimate Edition ✦</p>
+      <div class="badge-container">
+        <span class="badge"><i data-lucide="mic"></i> Voice</span>
+        <span class="badge"><i data-lucide="repeat"></i> Boomerang</span>
+        <span class="badge"><i data-lucide="layers"></i> 3-Strip</span>
+        <span class="badge"><i data-lucide="grid"></i> Kolase</span>
+        <span class="badge"><i data-lucide="zoom-in"></i> Zoom 2x</span>
+        <span class="badge"><i data-lucide="flip-horizontal"></i> Mirror</span>
+        <span class="badge"><i data-lucide="sparkles"></i> Polaroid</span>
+      </div>
+    </header>
 
-  <main class="studio-grid">
-    <section class="glass-panel">
-      <div class="viewfinder">
-        <video id="videoFeed" autoplay playsinline muted></video>
-        <div id="recIndicator" class="rec-indicator"><div class="rec-dot"></div> RECORDING</div>
-      </div>
-      <div class="action-bar">
-        <button class="btn btn-photo" id="btnSingle"><i data-lucide="camera"></i> <span>Jepret HD</span></button>
-        <button class="btn btn-strip" id="btnStrip"><i data-lucide="film"></i> <span>3-Strip HD</span></button>
-        <button class="btn btn-collage" id="btnCollage"><i data-lucide="layout-grid"></i> <span>Kolase HD</span></button>
-        <button class="btn btn-video" id="btnBoomerang"><i data-lucide="redo-2"></i> <span>Boomerang HD</span></button>
-      </div>
-      <div class="controls-wrapper">
-        <div class="control-row"><input type="text" id="eventName" class="custom-input" placeholder="✨ Tulis caption / watermark ✨" maxlength="30" value="PHOTO BOOTH"></div>
-        <div class="control-row">
-          <select id="filterSelect" class="selector"><option value="none">Natural</option><option value="fuji">Fuji 400H</option><option value="kodak">Kodak Portra</option><option value="bw">Monochrome</option><option value="vintage">Warm Vintage</option></select>
-          <select id="frameSelect" class="selector"><option value="light">Pearl White</option><option value="dark">Midnight Galaxy</option><option value="vibrant">Neon Dusk</option><option value="hologram">Holo Prism</option></select>
-          <button id="flipCamBtn" class="badge" style="background:#ffffff;"><i data-lucide="refresh-cw"></i> Flip</button>
-          <button id="mirrorToggleBtn" class="badge" style="background:#ffffff;"><i data-lucide="flip-horizontal"></i> Mirror</button>
-        </div>
-        <div class="control-row">
-          <div class="slider-label"><i data-lucide="timer"></i> <span id="cdVal">3</span>s</div>
-          <input type="range" id="countdownSlider" min="1" max="5" step="1" value="3">
-          <div class="slider-label"><i data-lucide="zoom-in"></i> <span id="zoomVal">100</span>%</div>
-          <input type="range" id="zoomSlider" min="100" max="200" step="5" value="100">
-          <div class="slider-label"><i data-lucide="image"></i> <span id="qualVal">100</span>%</div>
-          <input type="range" id="qualitySlider" min="90" max="100" step="1" value="100">
-        </div>
-        <div class="control-row"><span><i data-lucide="smile"></i> Stiker Ajaib:</span>
-          <div class="sticker-palette">
-            <button class="sticker-btn active" data-s="none">🚫</button><button class="sticker-btn" data-s="🎉">🎉</button><button class="sticker-btn" data-s="💎">💎</button>
-            <button class="sticker-btn" data-s="✨">✨</button><button class="sticker-btn" data-s="🔥">🔥</button><button class="sticker-btn" data-s="🤳">🤳</button>
-            <button class="sticker-btn" data-s="🌈">🌈</button><button class="sticker-btn" data-s="⭐">⭐</button><button class="sticker-btn" data-s="😎">😎</button>
+    <main class="studio-grid">
+      <section class="glass-panel">
+        <div class="viewfinder">
+          <video id="videoFeed" autoplay playsinline muted></video>
+          <div id="recIndicator" class="rec-indicator">
+            <div class="rec-dot"></div> REC HD
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="glass-panel gallery-panel">
-      <div class="gallery-header">
-        <h2><i data-lucide="archive"></i> Memory Vault HD <span id="itemCount">(0)</span></h2>
-        <div style="display: flex; gap: 8px;">
-          <button id="clearAllBtn" class="badge" style="background:#aa2e4ecc;"><i data-lucide="trash-2"></i> Hapus Semua</button>
-          <button id="btnZip" class="badge" style="background:#2c6e2ccc;"><i data-lucide="download"></i> ZIP Semua</button>
+        <div class="action-bar">
+          <button class="btn btn-photo" id="btnSingle"><i data-lucide="camera"></i> <span>Jepret PRO</span></button>
+          <button class="btn btn-strip" id="btnStrip"><i data-lucide="film"></i> <span>3-Strip</span></button>
+          <button class="btn btn-collage" id="btnCollage"><i data-lucide="layout-grid"></i> <span>Kolase</span></button>
+          <button class="btn btn-video" id="btnBoomerang"><i data-lucide="redo-2"></i> <span>Boomerang</span></button>
         </div>
-      </div>
-      <div id="galleryGrid" class="grid-masonry"><div style="grid-column:1/-1; text-align:center; padding:40px;">✨ Hasil foto SUPER HD & video akan muncul di sini ✨</div></div>
-    </section>
-  </main>
-</div>
-<div id="flashScreen" class="flash-bang"></div>
-<div id="countdownScreen" class="countdown-screen"><div class="countdown-number" id="countdownNumber">3</div><div class="countdown-progress"><div id="countdownProgressFill" class="countdown-progress-fill" style="width:100%"></div></div></div>
+        <div class="controls-wrapper">
+          <div class="control-row">
+            <input type="text" id="eventName" class="custom-input" placeholder="✍️ Tulis pesan khusus..." maxlength="45" value="✨ MOMENT ABADI ✨">
+          </div>
+          <div class="control-row">
+            <select id="filterSelect" class="selector">
+              <option value="none">Natural HD</option>
+              <option value="fuji">🎞️ Fuji Pro 400H</option>
+              <option value="kodak">📸 Kodak Portra</option>
+              <option value="bw">⚫ Monochrome</option>
+              <option value="vintage">🌅 Warm Vintage</option>
+            </select>
+            <select id="frameSelect" class="selector">
+              <option value="polaroid_premium" selected>📷 Polaroid Premium</option>
+              <option value="polaroid_classic">🤍 Polaroid Classic</option>
+              <option value="light">🌸 Soft Pearl</option>
+              <option value="dark">🌙 Midnight Velvet</option>
+            </select>
+            <button id="flipCamBtn" class="badge" style="background:#ffffff;"><i data-lucide="refresh-cw"></i> Flip</button>
+            <button id="mirrorToggleBtn" class="badge" style="background:#ffffff;"><i data-lucide="flip-horizontal"></i> Mirror</button>
+          </div>
+          <div class="control-row">
+            <div class="slider-label"><i data-lucide="timer"></i> <span id="cdVal">3</span>s</div>
+            <input type="range" id="countdownSlider" min="1" max="5" step="1" value="3">
+            <div class="slider-label"><i data-lucide="zoom-in"></i> <span id="zoomVal">100</span>%</div>
+            <input type="range" id="zoomSlider" min="100" max="200" step="5" value="100">
+            <div class="slider-label"><i data-lucide="crown"></i> <span id="qualVal">100</span>%</div>
+            <input type="range" id="qualitySlider" min="95" max="100" step="1" value="100">
+          </div>
+          <div class="control-row">
+            <span><i data-lucide="sparkles"></i> Stiker Premium:</span>
+            <div class="sticker-palette">
+              <button class="sticker-btn active" data-s="none">🚫</button>
+              <button class="sticker-btn" data-s="🌸">🌸</button>
+              <button class="sticker-btn" data-s="✨">✨</button>
+              <button class="sticker-btn" data-s="💎">💎</button>
+              <button class="sticker-btn" data-s="⭐">⭐</button>
+              <button class="sticker-btn" data-s="🕊️">🕊️</button>
+              <button class="sticker-btn" data-s="🌈">🌈</button>
+              <button class="sticker-btn" data-s="🎀">🎀</button>
+              <button class="sticker-btn" data-s="❤️">❤️</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<script>
-  (function(){
-    const video = document.getElementById('videoFeed');
-    const btnSingle = document.getElementById('btnSingle');
-    const btnStrip = document.getElementById('btnStrip');
-    const btnCollage = document.getElementById('btnCollage');
-    const btnBoomerang = document.getElementById('btnBoomerang');
-    const filterSelect = document.getElementById('filterSelect');
-    const frameSelect = document.getElementById('frameSelect');
-    const eventNameInput = document.getElementById('eventName');
-    const stickerBtns = document.querySelectorAll('.sticker-btn');
-    const galleryGrid = document.getElementById('galleryGrid');
-    const itemCountSpan = document.getElementById('itemCount');
-    const flashScreen = document.getElementById('flashScreen');
-    const countdownScreen = document.getElementById('countdownScreen');
-    const countdownNumber = document.getElementById('countdownNumber');
-    const countdownProgressFill = document.getElementById('countdownProgressFill');
-    const recIndicator = document.getElementById('recIndicator');
-    const btnZip = document.getElementById('btnZip');
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    const flipCamBtn = document.getElementById('flipCamBtn');
-    const mirrorToggleBtn = document.getElementById('mirrorToggleBtn');
-    const countdownSlider = document.getElementById('countdownSlider');
-    const cdVal = document.getElementById('cdVal');
-    const zoomSlider = document.getElementById('zoomSlider');
-    const zoomVal = document.getElementById('zoomVal');
-    const qualitySlider = document.getElementById('qualitySlider');
-    const qualVal = document.getElementById('qualVal');
+      <section class="glass-panel gallery-panel">
+        <div class="gallery-header">
+          <h2><i data-lucide="image"></i> Gallery <span id="itemCount">(0)</span></h2>
+          <div style="display: flex; gap: 10px;">
+            <button id="clearAllBtn" class="badge" style="background:#ffffff;"><i data-lucide="trash-2"></i> Hapus</button>
+            <button id="btnZip" class="badge" style="background:#ffffff;"><i data-lucide="download"></i> ZIP All</button>
+          </div>
+        </div>
+        <div id="galleryGrid" class="grid-masonry">
+          <div style="grid-column:1/-1; text-align:center; padding:40px;">✨ Hasil foto berkualitas tinggi akan muncul di sini ✨</div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="flashScreen" class="flash-bang"></div>
+  <div id="countdownScreen" class="countdown-screen">
+    <div class="countdown-number" id="countdownNumber">3</div>
+    <div class="countdown-progress">
+      <div id="countdownProgressFill" class="countdown-progress-fill" style="width:100%"></div>
+    </div>
+  </div>
 
-    let mediaStream = null;
-    let currentFacing = 'user';
-    let mirrorEnabled = false;   
-    let galleryItems = [];
-    let currentFilter = 'none';
-    let currentFrame = 'light';
-    let currentSticker = 'none';
-    let isBusy = false;
-    let mediaRecorder = null;
-    let recordedChunks = [];
-    let audioCtx = null;
-    let audioAllowed = false;
-    let countdownSec = 3;
-    let jpegQuality = 1.0;
-    let zoomLevel = 1;
+  <script>
+    (function() {
+      const video = document.getElementById('videoFeed');
+      const btnSingle = document.getElementById('btnSingle');
+      const btnStrip = document.getElementById('btnStrip');
+      const btnCollage = document.getElementById('btnCollage');
+      const btnBoomerang = document.getElementById('btnBoomerang');
+      const filterSelect = document.getElementById('filterSelect');
+      const frameSelect = document.getElementById('frameSelect');
+      const eventNameInput = document.getElementById('eventName');
+      const stickerBtns = document.querySelectorAll('.sticker-btn');
+      const galleryGrid = document.getElementById('galleryGrid');
+      const itemCountSpan = document.getElementById('itemCount');
+      const flashScreen = document.getElementById('flashScreen');
+      const countdownScreen = document.getElementById('countdownScreen');
+      const countdownNumber = document.getElementById('countdownNumber');
+      const countdownProgressFill = document.getElementById('countdownProgressFill');
+      const recIndicator = document.getElementById('recIndicator');
+      const btnZip = document.getElementById('btnZip');
+      const clearAllBtn = document.getElementById('clearAllBtn');
+      const flipCamBtn = document.getElementById('flipCamBtn');
+      const mirrorToggleBtn = document.getElementById('mirrorToggleBtn');
+      const countdownSlider = document.getElementById('countdownSlider');
+      const cdVal = document.getElementById('cdVal');
+      const zoomSlider = document.getElementById('zoomSlider');
+      const zoomVal = document.getElementById('zoomVal');
+      const qualitySlider = document.getElementById('qualitySlider');
+      const qualVal = document.getElementById('qualVal');
 
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+      let mediaStream = null;
+      let currentFacing = 'user';
+      let mirrorEnabled = false;
+      let galleryItems = [];
+      let currentFilter = 'none';
+      let currentFrame = 'photo_booth';
+      let currentSticker = 'none';
+      let isBusy = false;
+      let mediaRecorder = null;
+      let recordedChunks = [];
+      let audioCtx = null;
+      let audioAllowed = false;
+      let countdownSec = 3;
+      let jpegQuality = 1.0;
+      let zoomLevel = 1;
 
-    function updateVideoTransform() {
-      let transformValue = `scale(${zoomLevel})`;
-      if (mirrorEnabled) {
-        transformValue = `scaleX(-1) scale(${zoomLevel})`;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      function updateVideoTransform() {
+        let transformValue = `scale(${zoomLevel})`;
+        if (mirrorEnabled) transformValue = `scaleX(-1) scale(${zoomLevel})`;
+        video.style.transform = transformValue;
       }
-      video.style.transform = transformValue;
-    }
 
-    // Audio & speech
-    function initAudio() { if (!audioAllowed && (window.AudioContext || window.webkitAudioContext)) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); audioAllowed = true; } }
-    function playShutter() { if (!audioAllowed || !audioCtx) return; const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.connect(gain); gain.connect(audioCtx.destination); osc.type = 'sine'; osc.frequency.value = 880; gain.gain.value = 0.2; osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.12); gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2); osc.start(); osc.stop(audioCtx.currentTime + 0.2); audioCtx.resume(); }
-    function speakMsg(text) { if (!window.speechSynthesis) return; window.speechSynthesis.cancel(); const msg = new SpeechSynthesisUtterance(text); msg.lang = 'id-ID'; msg.rate = 1.0; window.speechSynthesis.speak(msg); }
-
-    const particleCanvas = document.getElementById('particles-canvas');
-    let pCtx = particleCanvas.getContext('2d');
-    let particles = [];
-    function resizeCanvas() { particleCanvas.width = window.innerWidth; particleCanvas.height = window.innerHeight; }
-    function initParticles() { particles = []; for(let i=0;i<100;i++) particles.push({ x:Math.random()*particleCanvas.width, y:Math.random()*particleCanvas.height, radius:Math.random()*2.5+1, alpha:Math.random()*0.5+0.2, speedX:(Math.random()-0.5)*0.3, speedY:(Math.random()-0.5)*0.3 }); }
-    function drawParticles() { if(!pCtx) return; pCtx.clearRect(0,0,particleCanvas.width,particleCanvas.height); for(let p of particles) { pCtx.beginPath(); pCtx.arc(p.x,p.y,p.radius,0,Math.PI*2); pCtx.fillStyle = `rgba(255, 200, 120, ${p.alpha})`; pCtx.fill(); p.x += p.speedX; p.y += p.speedY; if(p.x<0) p.x=particleCanvas.width; if(p.x>particleCanvas.width) p.x=0; if(p.y<0) p.y=particleCanvas.height; if(p.y>particleCanvas.height) p.y=0; } requestAnimationFrame(()=>drawParticles()); }
-    window.addEventListener('resize', ()=>{ resizeCanvas(); initParticles(); });
-    resizeCanvas(); initParticles(); drawParticles();
-
-    async function startCamera(facing = 'user') {
-      if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
-      const constraints = {
-        video: {
-          facingMode: { exact: facing },
-          width: { ideal: 3840 },
-          height: { ideal: 2160 },
-          frameRate: { ideal: 30 }
+      function initAudio() {
+        if (!audioAllowed && (window.AudioContext || window.webkitAudioContext)) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          audioAllowed = true;
         }
-      };
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        mediaStream = stream;
-        video.srcObject = stream;
-        currentFacing = facing;
-        updateVideoTransform();
-        speakMsg(`Kamera ${facing === 'user' ? 'depan' : 'belakang'} HD aktif`);
-      } catch(err) {
+      }
+      function playShutter() {
+        if (!audioAllowed || !audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.value = 0.2;
+        osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+        audioCtx.resume();
+      }
+      function speakMsg(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'id-ID';
+        msg.rate = 0.95;
+        window.speechSynthesis.speak(msg);
+      }
+
+      const particleCanvas = document.getElementById('particles-canvas');
+      let pCtx = particleCanvas.getContext('2d');
+      let particles = [];
+      function resizeCanvas() {
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+      }
+      function initParticles() {
+        particles = [];
+        for (let i = 0; i < 100; i++) particles.push({
+          x: Math.random() * particleCanvas.width,
+          y: Math.random() * particleCanvas.height,
+          radius: Math.random() * 2.5 + 1,
+          alpha: Math.random() * 0.3 + 0.1,
+          speedX: (Math.random() - 0.5) * 0.2,
+          speedY: (Math.random() - 0.5) * 0.2
+        });
+      }
+      function drawParticles() {
+        if (!pCtx) return;
+        pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+        for (let p of particles) {
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          pCtx.fillStyle = `rgba(255, 215, 180, ${p.alpha})`;
+          pCtx.fill();
+          p.x += p.speedX;
+          p.y += p.speedY;
+          if (p.x < 0) p.x = particleCanvas.width;
+          if (p.x > particleCanvas.width) p.x = 0;
+          if (p.y < 0) p.y = particleCanvas.height;
+          if (p.y > particleCanvas.height) p.y = 0;
+        }
+        requestAnimationFrame(drawParticles);
+      }
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        initParticles();
+      });
+      resizeCanvas();
+      initParticles();
+      drawParticles();
+
+      async function startCamera(facing = 'user') {
+        if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+        const constraints = {
+          video: {
+            facingMode: { exact: facing },
+            width: { ideal: 3840 },
+            height: { ideal: 2160 },
+            frameRate: { ideal: 30 }
+          }
+        };
         try {
-          const fallbackStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: facing }, width: { ideal: 1920 }, height: { ideal: 1080 } } });
-          mediaStream = fallbackStream;
-          video.srcObject = fallbackStream;
+          const stream = await navigator.mediaDevices.getUserMedia(constraints);
+          mediaStream = stream;
+          video.srcObject = stream;
           currentFacing = facing;
           updateVideoTransform();
-        } catch(e) {
-          alert("Izin kamera diperlukan!");
+          speakMsg(`Kamera ${facing === 'user' ? 'depan' : 'belakang'} HD Pro`);
+        } catch (err) {
+          try {
+            const fallbackStream = await navigator.mediaDevices.getUserMedia({
+              video: {
+                facingMode: { exact: facing },
+                width: { ideal: 1920 },
+                height: { ideal: 1080 }
+              }
+            });
+            mediaStream = fallbackStream;
+            video.srcObject = fallbackStream;
+            currentFacing = facing;
+            updateVideoTransform();
+          } catch (e) {
+            alert("Akses kamera diperlukan untuk hasil maksimal!");
+          }
         }
       }
-    }
 
-    async function flipCamera() { if(isBusy) return; const newFacing = currentFacing === 'user' ? 'environment' : 'user'; await startCamera(newFacing); speakMsg(`Kamera ${newFacing === 'user' ? 'depan' : 'belakang'} HD`); }
-    flipCamBtn.addEventListener('click', flipCamera);
-    
-    mirrorToggleBtn.addEventListener('click', () => {
-      mirrorEnabled = !mirrorEnabled;
-      updateVideoTransform();
-      speakMsg(mirrorEnabled ? "Mirror aktif (tampilan cermin)" : "Mirror nonaktif");
-    });
-
-    startCamera('user');
-
-    zoomSlider.addEventListener('input', (e) => { zoomLevel = e.target.value / 100; zoomVal.innerText = e.target.value; updateVideoTransform(); });
-    function updateVideoFilter() { let f = ''; if(currentFilter === 'fuji') f='contrast(1.1) saturate(1.3) sepia(0.2) hue-rotate(-8deg)'; else if(currentFilter === 'kodak') f='contrast(1.15) saturate(1.4) sepia(0.3)'; else if(currentFilter === 'bw') f='grayscale(1) contrast(1.2)'; else if(currentFilter === 'vintage') f='sepia(0.4) saturate(1.2) brightness(1.05)'; else f='none'; video.style.filter = f; }
-    filterSelect.addEventListener('change', (e)=>{ currentFilter = e.target.value; updateVideoFilter(); });
-    frameSelect.addEventListener('change', (e)=> currentFrame = e.target.value);
-    qualitySlider.addEventListener('input', (e)=>{ jpegQuality = e.target.value/100; qualVal.innerText = e.target.value; });
-    countdownSlider.addEventListener('input', (e)=>{ countdownSec = parseInt(e.target.value); cdVal.innerText = countdownSec; });
-    stickerBtns.forEach(btn => { btn.addEventListener('click', ()=>{ stickerBtns.forEach(b=>b.classList.remove('active')); btn.classList.add('active'); currentSticker = btn.getAttribute('data-s'); speakMsg(currentSticker!=='none' ? `Stiker ${currentSticker}` : 'Tanpa stiker'); }); });
-
-    function captureRawCanvas() {
-      const vw = video.videoWidth;
-      const vh = video.videoHeight;
-      if(vw === 0 || vh === 0) return null;
-      const canvas = document.createElement('canvas');
-      let drawW = vw, drawH = vh, sx = 0, sy = 0;
-      if (zoomLevel > 1) { 
-        const zoomRatio = 1 / zoomLevel; 
-        drawW = vw * zoomRatio; 
-        drawH = vh * zoomRatio; 
-        sx = (vw - drawW) / 2; 
-        sy = (vh - drawH) / 2; 
+      async function flipCamera() {
+        if (isBusy) return;
+        const newFacing = currentFacing === 'user' ? 'environment' : 'user';
+        await startCamera(newFacing);
+        speakMsg(`Kamera ${newFacing === 'user' ? 'depan' : 'belakang'}`);
       }
-      canvas.width = drawW;
-      canvas.height = drawH;
-      const ctx = canvas.getContext('2d');
-      ctx.filter = video.style.filter;
-      if (mirrorEnabled) {
-        ctx.translate(canvas.width, 0);
-        ctx.scale(-1, 1);
-      }
-      ctx.drawImage(video, sx, sy, drawW, drawH, 0, 0, drawW, drawH);
-      return canvas;
-    }
-
-    function applyFrameAndWatermark(sourceCanvas, isStrip = false, isCollage = false) {
-      const pad = (isStrip || isCollage) ? 35 : 30;
-      const bottom = (isStrip || isCollage) ? 130 : 90;
-      const w = sourceCanvas.width + (pad*2);
-      const h = sourceCanvas.height + pad + bottom;
-      const finalCanvas = document.createElement('canvas');
-      finalCanvas.width = w;
-      finalCanvas.height = h;
-      const ctx = finalCanvas.getContext('2d');
-      if (currentFrame === 'light') { ctx.fillStyle = "#FEF9E8"; ctx.fillRect(0,0,w,h); ctx.fillStyle = "#1E293B"; }
-      else if (currentFrame === 'dark') { ctx.fillStyle = "#0B1120"; ctx.fillRect(0,0,w,h); ctx.fillStyle = "#F8FAFC"; }
-      else if (currentFrame === 'vibrant') { const grad = ctx.createLinearGradient(0,0,w,0); grad.addColorStop(0,"#FF3366"); grad.addColorStop(1,"#FFB347"); ctx.fillStyle=grad; ctx.fillRect(0,0,w,h); ctx.fillStyle="#fff"; }
-      else if (currentFrame === 'hologram') { ctx.fillStyle = "#111122"; ctx.fillRect(0,0,w,h); ctx.strokeStyle = "rgba(255,200,100,0.9)"; ctx.lineWidth=5; for(let i=0;i<5;i++) ctx.strokeRect(i*12,i*12,w-i*24,h-i*24); ctx.fillStyle = "#FFE6B3"; }
-      ctx.drawImage(sourceCanvas, pad, pad);
-      let watermark = eventNameInput.value.trim() || "PHOTO BOOTH";
-      ctx.font = `700 ${(isStrip||isCollage) ? 28 : 26}px 'Outfit'`;
-      ctx.fillStyle = (currentFrame === 'light') ? "#0f172a" : "#FFE6B3";
-      ctx.fillText(watermark.toUpperCase(), pad, h - (isStrip||isCollage ? 45 : 32));
-      const dateStr = new Date().toLocaleDateString('id-ID');
-      ctx.font = `400 16px monospace`;
-      ctx.fillText(dateStr, w - pad - 100, h - (isStrip||isCollage ? 45 : 32));
-      if (currentSticker !== 'none') {
-        ctx.font = `${(isStrip||isCollage) ? 72 : 64}px "Segoe UI Emoji"`;
-        ctx.fillText(currentSticker, w - pad - (isStrip? 80:60), pad + (isStrip? 70:55));
-      }
-      return finalCanvas.toDataURL('image/jpeg', jpegQuality);
-    }
-
-    function doFlash() { flashScreen.style.opacity = '1'; playShutter(); setTimeout(()=> flashScreen.style.opacity = '0', 90); }
-    
-    async function enhancedCountdown() {
-      countdownScreen.style.opacity = '1';
-      countdownNumber.innerText = countdownSec;
-      countdownProgressFill.style.width = '100%';
-      for(let i=countdownSec; i>0; i--) {
-        countdownNumber.innerText = i;
-        speakMsg(i.toString());
-        const startTime = performance.now();
-        const duration = 1000;
-        await new Promise(resolve => {
-          const animateProgress = (now) => {
-            const elapsed = now - startTime;
-            const percent = Math.max(0, (duration - elapsed) / duration) * 100;
-            countdownProgressFill.style.width = `${percent}%`;
-            if (elapsed < duration) requestAnimationFrame(animateProgress);
-            else resolve();
-          };
-          requestAnimationFrame(animateProgress);
-        });
-        if(i>1) await new Promise(r => setTimeout(r, 0));
-      }
-      speakMsg("Senyum!");
-      countdownScreen.style.opacity = '0';
-      await new Promise(r=>setTimeout(r, 150));
-    }
-
-    async function countdownAndCapture() {
-      await enhancedCountdown();
-      doFlash();
-      return captureRawCanvas();
-    }
-
-    // Gallery
-    async function addToGallery(type, url, blob=null) { galleryItems.unshift({ id: Date.now(), type, url, blob }); renderGallery(); if(typeof lucide !== 'undefined') lucide.createIcons(); }
-    function renderGallery() {
-      if(galleryItems.length===0) { galleryGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px;">✨ Kenangan HD akan muncul disini ✨</div>`; itemCountSpan.innerText = '(0)'; return; }
-      itemCountSpan.innerText = `(${galleryItems.length})`;
-      galleryGrid.innerHTML = '';
-      galleryItems.forEach((item, idx) => {
-        const card = document.createElement('div'); card.className = 'item-card';
-        if(item.type === 'image') card.innerHTML = `<img src="${item.url}" alt="moment HD">`; else card.innerHTML = `<video src="${item.url}" autoplay loop muted playsinline></video>`;
-        card.innerHTML += `<div class="item-meta"><span style="background:#FF3366cc; padding:2px 8px; border-radius:20px; font-size:0.7rem;">${item.type==='image'?'📸 FOTO HD':'🌀 VIDEO HD'}</span>
-        <div><button class="meta-btn dl-btn" data-idx="${idx}"><i data-lucide="download"></i></button><button class="meta-btn del-btn" data-idx="${idx}"><i data-lucide="trash-2"></i></button></div></div>`;
-        galleryGrid.appendChild(card);
+      flipCamBtn.addEventListener('click', flipCamera);
+      mirrorToggleBtn.addEventListener('click', () => {
+        mirrorEnabled = !mirrorEnabled;
+        updateVideoTransform();
+        speakMsg(mirrorEnabled ? "Mode cermin aktif" : "Mode normal");
       });
-      document.querySelectorAll('.dl-btn').forEach(btn => btn.addEventListener('click', (e) => { let i = parseInt(btn.getAttribute('data-idx')); downloadItem(i); e.stopPropagation(); }));
-      document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', (e) => { let i = parseInt(btn.getAttribute('data-idx')); deleteItem(i); e.stopPropagation(); }));
-      if(typeof lucide !== 'undefined') lucide.createIcons();
-    }
-    function downloadItem(idx) { const item = galleryItems[idx]; const a = document.createElement('a'); a.href = item.url; a.download = `PHOTO_HD_${item.id}.${item.type==='image'?'jpg':'webm'}`; a.click(); speakMsg("Unduh HD selesai"); }
-    function deleteItem(idx) { if(confirm("Hapus memori HD ini?")) { galleryItems.splice(idx,1); renderGallery(); speakMsg("Terhapus"); } }
-    clearAllBtn.addEventListener('click', ()=>{ if(confirm("Hapus SEMUA memori HD?")){ galleryItems=[]; renderGallery(); speakMsg("Semua terhapus"); } });
+      startCamera('user');
 
-    // Actions
-    btnSingle.addEventListener('click', async () => { if(isBusy) return; isBusy=true; initAudio(); speakMsg("Siap potret HD"); const raw = await countdownAndCapture(); if(raw) { const final = applyFrameAndWatermark(raw, false, false); await addToGallery('image', final); } isBusy=false; });
-    btnStrip.addEventListener('click', async () => { if(isBusy) return; isBusy=true; initAudio(); speakMsg("Mode strip 3 foto HD"); let shots=[]; for(let i=0;i<3;i++){ await enhancedCountdown(); doFlash(); shots.push(captureRawCanvas()); if(i<2){ speakMsg("Pose berikutnya"); await new Promise(r=>setTimeout(r,1200)); } } const sw=shots[0].width, sh=shots[0].height, gap=28; const stripCanvas=document.createElement('canvas'); stripCanvas.width=sw; stripCanvas.height=(sh*3)+(gap*2); const mctx=stripCanvas.getContext('2d'); shots.forEach((c,idx)=>{ mctx.drawImage(c,0,idx*(sh+gap)); }); const final=applyFrameAndWatermark(stripCanvas, true, false); await addToGallery('image', final); isBusy=false; });
-    btnCollage.addEventListener('click', async () => { if(isBusy) return; isBusy=true; initAudio(); speakMsg("Mode kolase 4 bidikan HD"); let shots=[]; for(let i=0;i<4;i++){ await enhancedCountdown(); doFlash(); shots.push(captureRawCanvas()); if(i<3){ speakMsg("Ganti pose"); await new Promise(r=>setTimeout(r,1000)); } } const w=shots[0].width, h=shots[0].height; const collageCanvas=document.createElement('canvas'); collageCanvas.width=w*2; collageCanvas.height=h*2; const ctx=collageCanvas.getContext('2d'); shots.forEach((c,idx)=>{ const x=(idx%2)*w; const y=Math.floor(idx/2)*h; ctx.drawImage(c,x,y,w,h); }); const final=applyFrameAndWatermark(collageCanvas, false, true); await addToGallery('image', final); isBusy=false; });
-    btnBoomerang.addEventListener('click', async () => { if(isBusy || !mediaStream) return; isBusy=true; initAudio(); speakMsg("Boomerang HD 3 detik"); await enhancedCountdown(); recordedChunks=[]; recIndicator.style.opacity='1'; try{ mediaRecorder = new MediaRecorder(mediaStream, { mimeType: 'video/webm' }); }catch(e){ mediaRecorder=new MediaRecorder(mediaStream); } mediaRecorder.ondataavailable = (e) => { if(e.data.size>0) recordedChunks.push(e.data); }; mediaRecorder.onstop = async () => { const blob = new Blob(recordedChunks, { type: 'video/webm' }); const url = URL.createObjectURL(blob); await addToGallery('video', url, blob); recIndicator.style.opacity='0'; isBusy=false; }; mediaRecorder.start(); await new Promise(r=>setTimeout(r,3000)); mediaRecorder.stop(); speakMsg("Boomerang HD selesai"); });
-    btnZip.addEventListener('click', async () => { if(galleryItems.length===0) return alert("Tidak ada item HD"); speakMsg("Membuat ZIP HD"); const zip = new JSZip(); const folder = zip.folder("PHOTO_HD_Moments"); for(let i=0;i<galleryItems.length;i++){ const item = galleryItems[i]; const ext = item.type==='image'?'jpg':'webm'; const filename = `Moment_HD_${i+1}_${item.id}.${ext}`; if(item.type==='image'){ const b64 = item.url.split(',')[1]; folder.file(filename, b64, {base64:true}); } else if(item.blob) folder.file(filename, item.blob); } const zipBlob = await zip.generateAsync({type:"blob"}); const a = document.createElement('a'); a.href=URL.createObjectURL(zipBlob); a.download=`PHOTO_HD_VAULT_${Date.now()}.zip`; a.click(); speakMsg("ZIP HD siap"); });
-    
-    window.addEventListener('load', ()=>{ speakMsg("PHOTO BOOTH HD Edition siap! Mirror sekarang berfungsi di preview."); if(typeof lucide !== 'undefined') lucide.createIcons(); });
-  })();
-</script>
+      zoomSlider.addEventListener('input', (e) => {
+        zoomLevel = e.target.value / 100;
+        zoomVal.innerText = e.target.value;
+        updateVideoTransform();
+      });
+      function updateVideoFilter() {
+        let f = '';
+        if (currentFilter === 'fuji') f = 'contrast(1.12) saturate(1.35) sepia(0.18) hue-rotate(-6deg) brightness(1.02)';
+        else if (currentFilter === 'kodak') f = 'contrast(1.18) saturate(1.4) sepia(0.25) brightness(1.01)';
+        else if (currentFilter === 'bw') f = 'grayscale(1) contrast(1.25) brightness(1.02)';
+        else if (currentFilter === 'vintage') f = 'sepia(0.45) saturate(1.25) brightness(1.05) contrast(1.08)';
+        else f = 'none';
+        video.style.filter = f;
+      }
+      filterSelect.addEventListener('change', (e) => {
+        currentFilter = e.target.value;
+        updateVideoFilter();
+      });
+      frameSelect.addEventListener('change', (e) => currentFrame = e.target.value);
+      qualitySlider.addEventListener('input', (e) => {
+        jpegQuality = e.target.value / 100;
+        qualVal.innerText = e.target.value;
+      });
+      countdownSlider.addEventListener('input', (e) => {
+        countdownSec = parseInt(e.target.value);
+        cdVal.innerText = countdownSec;
+      });
+      stickerBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          stickerBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentSticker = btn.getAttribute('data-s');
+          speakMsg(currentSticker !== 'none' ? `Stiker ${currentSticker}` : 'Tanpa stiker');
+        });
+      });
+
+      function captureRawCanvas() {
+        const vw = video.videoWidth,
+          vh = video.videoHeight;
+        if (vw === 0 || vh === 0) return null;
+        const canvas = document.createElement('canvas');
+        let drawW = vw,
+          drawH = vh,
+          sx = 0,
+          sy = 0;
+        if (zoomLevel > 1) {
+          const zoomRatio = 1 / zoomLevel;
+          drawW = vw * zoomRatio;
+          drawH = vh * zoomRatio;
+          sx = (vw - drawW) / 2;
+          sy = (vh - drawH) / 2;
+        }
+        canvas.width = drawW;
+        canvas.height = drawH;
+        const ctx = canvas.getContext('2d');
+        ctx.filter = video.style.filter;
+        if (mirrorEnabled) {
+          ctx.translate(canvas.width, 0);
+          ctx.scale(-1, 1);
+        }
+        ctx.drawImage(video, sx, sy, drawW, drawH, 0, 0, drawW, drawH);
+        return canvas;
+      }
+
+      function applyPremiumPolaroid(sourceCanvas, isStrip = false, isCollage = false) {
+        const imgW = sourceCanvas.width;
+        const imgH = sourceCanvas.height;
+        const padSide = 42;
+        const padTop = 42;
+        const padBottom = 110; 
+        const finalW = imgW + (padSide * 2);
+        const finalH = imgH + padTop + padBottom;
+        const canvas = document.createElement('canvas');
+        canvas.width = finalW;
+        canvas.height = finalH;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = "#FFFCF5";
+        ctx.fillRect(0, 0, finalW, finalH);
+
+        ctx.shadowColor = "rgba(0,0,0,0.25)";
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 4;
+        ctx.shadowOffsetY = 4;
+        ctx.drawImage(sourceCanvas, padSide, padTop, imgW, imgH);
+        ctx.shadowColor = "transparent";
+
+        ctx.strokeStyle = "#EADBC6";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(padSide - 1, padTop - 1, imgW + 2, imgH + 2);
+
+        let watermark = eventNameInput.value.trim() || "MOMENT ABADI";
+        ctx.font = `600 30px 'Caveat', cursive`;
+        ctx.fillStyle = "#2C2B28";
+        ctx.textAlign = "center";
+        ctx.fillText(watermark.toUpperCase(), finalW / 2, padTop + imgH + 38);
+
+        const dateStr = new Date().toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+        ctx.font = `400 15px 'Outfit', monospace`;
+        ctx.fillStyle = "#7B6E5A";
+        ctx.fillText(dateStr, finalW / 2, padTop + imgH + 68);
+
+        if (currentSticker !== 'none') {
+          ctx.font = `52px "Segoe UI Emoji"`;
+          ctx.fillStyle = "#A56B2F";
+          ctx.textAlign = "right";
+          ctx.fillText(currentSticker, finalW - 25, padTop + imgH + 78);
+        }
+        const grad = ctx.createLinearGradient(0, 0, finalW, finalH);
+        grad.addColorStop(0, "rgba(255,245,235,0.1)");
+        grad.addColorStop(1, "rgba(0,0,0,0.03)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, finalW, finalH);
+
+        return canvas.toDataURL('image/jpeg', jpegQuality);
+      }
+
+      function applyClassicPolaroid(sourceCanvas) {
+        const imgW = sourceCanvas.width,
+          imgH = sourceCanvas.height;
+        const pad = 35,
+          bottom = 95;
+        const finalW = imgW + pad * 2,
+          finalH = imgH + pad + bottom;
+        const canvas = document.createElement('canvas');
+        canvas.width = finalW;
+        canvas.height = finalH;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#FFF9F0";
+        ctx.fillRect(0, 0, finalW, finalH);
+        ctx.shadowColor = "rgba(0,0,0,0.2)";
+        ctx.shadowBlur = 8;
+        ctx.drawImage(sourceCanvas, pad, pad, imgW, imgH);
+        ctx.shadowColor = "transparent";
+        ctx.fillStyle = "#1E1B16";
+        ctx.font = `500 24px 'Caveat', cursive`;
+        ctx.textAlign = "center";
+        ctx.fillText(eventNameInput.value.trim() || "POLAROID", finalW / 2, pad + imgH + 35);
+        ctx.font = "12px monospace";
+        ctx.fillStyle = "#6B5A48";
+        ctx.fillText(new Date().toLocaleDateString(), finalW / 2, pad + imgH + 58);
+        return canvas.toDataURL('image/jpeg', jpegQuality);
+      }
+
+      function applyFrameAndWatermark(sourceCanvas, isStrip = false, isCollage = false) {
+        if (currentFrame === 'polaroid_premium') return applyPremiumPolaroid(sourceCanvas, isStrip, isCollage);
+        else if (currentFrame === 'polaroid_classic') return applyClassicPolaroid(sourceCanvas);
+        else {
+          const pad = 30,
+            bottom = 85;
+          const w = sourceCanvas.width + pad * 2,
+            h = sourceCanvas.height + pad + bottom;
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = currentFrame === 'light' ? "#FFF8F0" : "#10121E";
+          ctx.fillRect(0, 0, w, h);
+          ctx.drawImage(sourceCanvas, pad, pad);
+          ctx.font = `bold 22px 'Outfit'`;
+          ctx.fillStyle = currentFrame === 'light' ? "#2D2A26" : "#FFE6C7";
+          ctx.fillText(eventNameInput.value.trim().toUpperCase(), pad, h - 32);
+          return canvas.toDataURL('image/jpeg', jpegQuality);
+        }
+      }
+
+      function doFlash() {
+        flashScreen.style.opacity = '1';
+        playShutter();
+        setTimeout(() => flashScreen.style.opacity = '0', 100);
+      }
+
+      async function enhancedCountdown() {
+        countdownScreen.style.opacity = '1';
+        countdownNumber.innerText = countdownSec;
+        countdownProgressFill.style.width = '100%';
+        for (let i = countdownSec; i > 0; i--) {
+          countdownNumber.innerText = i;
+          speakMsg(i.toString());
+          const startTime = performance.now();
+          const duration = 1000;
+          await new Promise(resolve => {
+            const animateProgress = (now) => {
+              const elapsed = now - startTime;
+              const percent = Math.max(0, (duration - elapsed) / duration) * 100;
+              countdownProgressFill.style.width = `${percent}%`;
+              if (elapsed < duration) requestAnimationFrame(animateProgress);
+              else resolve();
+            };
+            requestAnimationFrame(animateProgress);
+          });
+          if (i > 1) await new Promise(r => setTimeout(r, 0));
+        }
+        speakMsg("Senyum!");
+        countdownScreen.style.opacity = '0';
+        await new Promise(r => setTimeout(r, 150));
+      }
+
+      async function countdownAndCapture() {
+        await enhancedCountdown();
+        doFlash();
+        return captureRawCanvas();
+      }
+
+      async function addToGallery(type, url, blob = null) {
+        galleryItems.unshift({
+          id: Date.now(),
+          type,
+          url,
+          blob
+        });
+        renderGallery();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+      function renderGallery() {
+        if (galleryItems.length === 0) {
+          galleryGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:30px;">✨ Hasil foto berkualitas tinggi akan muncul di sini ✨</div>`;
+          itemCountSpan.innerText = '(0)';
+          return;
+        }
+        itemCountSpan.innerText = `(${galleryItems.length})`;
+        galleryGrid.innerHTML = '';
+        galleryItems.forEach((item, idx) => {
+          const card = document.createElement('div');
+          card.className = 'item-card';
+          if (item.type === 'image') card.innerHTML = `<img src="${item.url}" alt="premium photo booth result">`;
+          else card.innerHTML = `<video src="${item.url}" autoplay loop muted playsinline></video>`;
+          card.innerHTML += `<div class="item-meta"><span style="background:#FFB347cc; padding:2px 10px; border-radius:30px; font-size:0.65rem; font-weight:bold;">${item.type === 'image' ? '📸 PHOTO_BOOTH' : '🌀 BOOMERANG'}</span>
+        <div><button class="meta-btn dl-btn" data-idx="${idx}"><i data-lucide="download"></i></button><button class="meta-btn del-btn" data-idx="${idx}"><i data-lucide="trash-2"></i></button></div></div>`;
+          galleryGrid.appendChild(card);
+        });
+        document.querySelectorAll('.dl-btn').forEach(btn => btn.addEventListener('click', (e) => {
+          let i = parseInt(btn.getAttribute('data-idx'));
+          downloadItem(i);
+          e.stopPropagation();
+        }));
+        document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', (e) => {
+          let i = parseInt(btn.getAttribute('data-idx'));
+          deleteItem(i);
+          e.stopPropagation();
+        }));
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+      function downloadItem(idx) {
+        const item = galleryItems[idx];
+        const a = document.createElement('a');
+        a.href = item.url;
+        a.download = `PHOTO_BOOTH_${item.id}.${item.type === 'image' ? 'jpg' : 'webm'}`;
+        a.click();
+        speakMsg("Unduh foto berhasil");
+      }
+      function deleteItem(idx) {
+        if (confirm("Hapus kenangan ini?")) {
+          galleryItems.splice(idx, 1);
+          renderGallery();
+          speakMsg("Terhapus");
+        }
+      }
+      clearAllBtn.addEventListener('click', () => {
+        if (confirm("Hapus SEMUA koleksi?")) {
+          galleryItems = [];
+          renderGallery();
+          speakMsg("Semua terhapus");
+        }
+      });
+
+      btnSingle.addEventListener('click', async () => {
+        if (isBusy) return;
+        isBusy = true;
+        initAudio();
+        speakMsg("Siap potretan berkualitas tinggi");
+        const raw = await countdownAndCapture();
+        if (raw) {
+          const final = applyFrameAndWatermark(raw, false, false);
+          await addToGallery('image', final);
+        }
+        isBusy = false;
+      });
+      btnStrip.addEventListener('click', async () => {
+        if (isBusy) return;
+        isBusy = true;
+        initAudio();
+        speakMsg("Strip 3 foto kualitas tinggi");
+        let shots = [];
+        for (let i = 0; i < 3; i++) {
+          await enhancedCountdown();
+          doFlash();
+          shots.push(captureRawCanvas());
+          if (i < 2) {
+            speakMsg("Pose berikutnya");
+            await new Promise(r => setTimeout(r, 1200));
+          }
+        }
+        const sw = shots[0].width,
+          sh = shots[0].height,
+          gap = 30;
+        const stripCanvas = document.createElement('canvas');
+        stripCanvas.width = sw;
+        stripCanvas.height = (sh * 3) + (gap * 2);
+        const mctx = stripCanvas.getContext('2d');
+        shots.forEach((c, idx) => {
+          mctx.drawImage(c, 0, idx * (sh + gap));
+        });
+        const final = applyFrameAndWatermark(stripCanvas, true, false);
+        await addToGallery('image', final);
+        isBusy = false;
+      });
+      btnCollage.addEventListener('click', async () => {
+        if (isBusy) return;
+        isBusy = true;
+        initAudio();
+        speakMsg("Kolase 4 foto premium");
+        let shots = [];
+        for (let i = 0; i < 4; i++) {
+          await enhancedCountdown();
+          doFlash();
+          shots.push(captureRawCanvas());
+          if (i < 3) {
+            speakMsg("Ganti pose");
+            await new Promise(r => setTimeout(r, 1000));
+          }
+        }
+        const w = shots[0].width,
+          h = shots[0].height;
+        const collageCanvas = document.createElement('canvas');
+        collageCanvas.width = w * 2;
+        collageCanvas.height = h * 2;
+        const ctx = collageCanvas.getContext('2d');
+        shots.forEach((c, idx) => {
+          const x = (idx % 2) * w;
+          const y = Math.floor(idx / 2) * h;
+          ctx.drawImage(c, x, y, w, h);
+        });
+        const final = applyFrameAndWatermark(collageCanvas, false, true);
+        await addToGallery('image', final);
+        isBusy = false;
+      });
+      btnBoomerang.addEventListener('click', async () => {
+        if (isBusy || !mediaStream) return;
+        isBusy = true;
+        initAudio();
+        speakMsg("Boomerang 3 detik HD");
+        await enhancedCountdown();
+        recordedChunks = [];
+        recIndicator.style.opacity = '1';
+        try {
+          mediaRecorder = new MediaRecorder(mediaStream, {
+            mimeType: 'video/webm'
+          });
+        } catch (e) {
+          mediaRecorder = new MediaRecorder(mediaStream);
+        }
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) recordedChunks.push(e.data);
+        };
+        mediaRecorder.onstop = async () => {
+          const blob = new Blob(recordedChunks, {
+            type: 'video/webm'
+          });
+          const url = URL.createObjectURL(blob);
+          await addToGallery('video', url, blob);
+          recIndicator.style.opacity = '0';
+          isBusy = false;
+        };
+        mediaRecorder.start();
+        await new Promise(r => setTimeout(r, 3000));
+        mediaRecorder.stop();
+        speakMsg("Boomerang selesai");
+      });
+      btnZip.addEventListener('click', async () => {
+        if (galleryItems.length === 0) return alert("Belum ada foto");
+        speakMsg("Membuat arsip ZIP");
+        const zip = new JSZip();
+        const folder = zip.folder("PHOTO_BOOTH");
+        for (let i = 0; i < galleryItems.length; i++) {
+          const item = galleryItems[i];
+          const ext = item.type === 'image' ? 'jpg' : 'webm';
+          const filename = `Photo_Booth_${i + 1}_${item.id}.${ext}`;
+          if (item.type === 'image') {
+            const b64 = item.url.split(',')[1];
+            folder.file(filename, b64, {
+              base64: true
+            });
+          } else if (item.blob) folder.file(filename, item.blob);
+        }
+        const zipBlob = await zip.generateAsync({
+          type: "blob"
+        });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(zipBlob);
+        a.download = `PHOTO_BOOTH_${Date.now()}.zip`;
+        a.click();
+        speakMsg("ZIP siap!");
+      });
+
+      window.addEventListener('load', () => {
+        speakMsg("Photo Booth siap! Kualitas foto terbaik, frame premium.");
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      });
+    })();
+  </script>
 </body>
 </html>
